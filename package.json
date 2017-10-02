@@ -1,0 +1,16 @@
+{
+  "name": "ffmpeg-batchify",
+  "version": "1.0.0",
+  "description": "CLI for batch-processing videos using ffmpeg",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leo Bernard <leo.bernard@me.com>",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.11.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "js-yaml": "^3.10.0"
+  }
+}

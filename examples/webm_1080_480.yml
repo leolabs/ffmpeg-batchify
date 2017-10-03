@@ -1,0 +1,29 @@
+# This config converts input files to webm, once in 1080p and once in 480p
+
+outputs:
+  - format: webm
+    prefix: 1080p_
+    video:
+      codec: libvpx
+      size: ?x1080
+    audio:
+      codec: libvorbis
+      channels: 1
+    options:
+      - '-threads 4'
+      - '-speed 8'
+      - '-tile-columns 4'
+      - '-frame-parallel 1'
+  - format: webm
+    prefix: 480p_
+    video:
+      codec: libvpx
+      size: ?x480
+    audio:
+      codec: libvorbis
+      channels: 1
+    options:
+      - '-threads 4'
+      - '-speed 8'
+      - '-tile-columns 4'
+      - '-frame-parallel 1'

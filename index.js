@@ -60,7 +60,7 @@ readFileAsync(commander.config)
                 command.output(generateOutputPath(file, output.format, output.prefix, output.suffix));
 
                 if(output.container === 'flv') command.flvmeta();
-                command.format(output.container);
+                command.format(output.format);
 
                 if(output.audio) {
                     if(output.audio.codec) command.audioCodec(output.audio.codec);

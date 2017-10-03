@@ -7,6 +7,7 @@ const {promisify} = require('util');
 const readFileAsync = promisify(fs.readFile);
 const path = require('path');
 const ProgressBar = require('ascii-progress');
+const colors = require('colors');
 
 commander
     .version(packageInfo.version)
@@ -105,13 +106,15 @@ readFileAsync(commander.config)
             command.on('end', () => {
                 bar.clear();
 
+                console.log(`${path.basename(file).green} ✅`);
+
                 resolve(file);
             });
 
             command.on('error', e => reject(e));
 
             command.run();
-        }))
-    })
-    .then(output => console.log)
+        })
+    )))
+    .then(output => console.log('\nAll tasks finished! 🎉'))
     .catch(console.error);

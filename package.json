@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ascii-progress": "^1.0.5",
+    "colors": "^1.1.2",
     "commander": "^2.11.0",
     "fluent-ffmpeg": "^2.1.2",
     "js-yaml": "^3.10.0"

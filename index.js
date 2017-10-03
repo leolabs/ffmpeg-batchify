@@ -73,7 +73,7 @@ readFileAsync(commander.config)
                     if(output.video.codec) command.videoCodec(output.video.codec);
                     if(output.video.bitrate) command.videoBitrate(output.video.bitrate);
                     if(output.video.fps) command.fps(output.video.bitrate);
-                    if(output.video.size) command.videoSize(output.video.size);
+                    if(output.video.size) command.size(output.video.size);
                     if(output.video.aspect) command.aspect(output.video.aspect);
                     if(output.video.filters) command.videoFilters(output.video.filters);
                 }

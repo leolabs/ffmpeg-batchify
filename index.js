@@ -5,6 +5,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const {promisify} = require('util');
 const readFileAsync = promisify(fs.readFile);
+const path = require('path');
 const ProgressBar = require('ascii-progress');
 
 commander
@@ -25,6 +26,19 @@ if (!commander.config) {
     process.exit(1)
 }
 
+function generateOutputPath(inputPath, format, prefix, suffix) {
+    const inputDir = path.dirname(inputPath);
+    const inputExtension = inputPath.substring(inputPath.lastIndexOf('.'));
+    let outputFile = path.basename(inputPath, inputExtension);
+
+    if(suffix) outputFile += suffix;
+    if(prefix) outputFile = prefix + outputFile;
+
+    outputFile += "." + format;
+
+    return path.join(inputDir, outputFile);
+}
+
 const configPath = commander.config;
 readFileAsync(commander.config)
     .then(text => {
@@ -43,13 +57,7 @@ readFileAsync(commander.config)
             const command = new ffmpegCommand(file);
 
             config.outputs.forEach(output => {
-                var outputFile = file.substring(0, file.lastIndexOf('.'));
-
-                if(output.suffix) outputFile += output.suffix;
-                if(output.prefix) outputFile = output.prefix + outputFile;
-
-                outputFile += "." + output.container;
-                command.output(outputFile);
+                command.output(generateOutputPath(file, output.format, output.prefix, output.suffix));
 
                 if(output.container === 'flv') command.flvmeta();
                 command.format(output.container);

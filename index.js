@@ -95,7 +95,7 @@ readFileAsync(commander.config)
                 });
             });
 
-            command.on('progress', function(progress) {
+            command.on('progress', progress => {
                 bar.update(progress.percent / 100, {
                     fps: progress.currentFps,
                     file: path.basename(file)

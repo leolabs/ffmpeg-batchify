@@ -16,26 +16,32 @@ For now, only the output key is being used by ffmpeg-batchify, but this is what 
 
 ```yaml
 outputs:
-  - container: webm
+  - format: webm
     prefix: 1080p_
     video:
       codec: libvpx
-      resolution: ?x1080
+      size: ?x1080
     audio:
-      codec: libmp3lame
-      bitrate: 256k
+      codec: libvorbis
       channels: 1
-    options: '-sn'
-  - container: webm
+    options:
+      - '-threads 4'
+      - '-speed 8'
+      - '-tile-columns 4'
+      - '-frame-parallel 1'
+  - format: webm
     prefix: 480p_
     video:
       codec: libvpx
-      resolution: ?x480
+      size: ?x480
     audio:
-      codec: libmp3lame
-      bitrate: 256k
+      codec: libvorbis
       channels: 1
-    options: '-sn'
+    options:
+      - '-threads 4'
+      - '-speed 8'
+      - '-tile-columns 4'
+      - '-frame-parallel 1'
 ```
 
 # Contributing

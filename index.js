@@ -82,6 +82,11 @@ readFileAsync(commander.config)
             var bar;
 
             command.on('start', command => {
+                if(commander.verbose) {
+                    console.log(`🚀 Starting encoding of ${path.basename(file)}`);
+                    console.log(`👉 Command: ${command}`);
+                }
+
                 bar = new ProgressBar({
                     schema: '[:bar] :fpsfps :percent :etas :file',
                     total: 100,

@@ -50,8 +50,8 @@ readFileAsync(commander.config)
             throw new Exception('Config file is neither JSON nor YML');
         }
     })
-    .then(config => {
-        return Promise.all(commander.args.map(file => {
+    .then(config => Promise.all(commander.args.map(file =>
+        new Promise((resolve, reject) => {
             const command = new ffmpegCommand(file);
 
             config.outputs.forEach(output => {
@@ -101,6 +101,14 @@ readFileAsync(commander.config)
                     file: path.basename(file)
                 });
             });
+
+            command.on('end', () => {
+                bar.clear();
+
+                resolve(file);
+            });
+
+            command.on('error', e => reject(e));
 
             command.run();
         }))

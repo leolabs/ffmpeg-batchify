@@ -5,11 +5,13 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const {promisify} = require('util');
 const readFileAsync = promisify(fs.readFile);
+const ProgressBar = require('ascii-progress');
 
 commander
     .version(packageInfo.version)
     .usage('[options] <files...>')
     .option('-c, --config [path]', 'Use a configuration file at the specified path')
+    .option('-v, --verbose', 'Output additional information')
     .parse(process.argv);
 
 if (commander.args.length === 0) {
@@ -71,12 +73,22 @@ readFileAsync(commander.config)
                 if(output.options) command.outputOptions(output.options);
             });
 
-            command.on('progress', function(progress) {
-                console.log(`Processing ${file}: ${progress.percent}% done`);
+            var bar;
+
+            command.on('start', command => {
+                bar = new ProgressBar({
+                    schema: '[:bar] :fpsfps :percent :etas :file',
+                    total: 100,
+                    filled: '=',
+                    blank: '-'
+                });
             });
 
-            command.on('stderr', function(stderrLine) {
-                console.log('Stderr output: ' + stderrLine);
+            command.on('progress', function(progress) {
+                bar.update(progress.percent / 100, {
+                    fps: progress.currentFps,
+                    file: path.basename(file)
+                });
             });
 
             command.run();

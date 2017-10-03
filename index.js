@@ -51,8 +51,6 @@ readFileAsync(commander.config)
         }
     })
     .then(config => {
-        console.log(config);
-
         return Promise.all(commander.args.map(file => {
             const command = new ffmpegCommand(file);
 
